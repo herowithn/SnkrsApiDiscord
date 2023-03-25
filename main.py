@@ -54,6 +54,7 @@ def request_products():
             continue
         else:
             products.append(x)
+            save()
             embed = discord.Embed(title=x.title, color=0x00eeff)
             embed.set_author(name='New Drop')
             embed.set_image(
@@ -64,6 +65,7 @@ def request_products():
             print('1')
             send_webook(embed)
 if __name__ == '__main__':
+    load()
     while True:
         try:
             request_products()
