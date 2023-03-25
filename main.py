@@ -2,6 +2,19 @@ import requests, json, pickle, time, discord
 from discord import Webhook, SyncWebhook
 import aiohttp
 products = []
+
+def load():
+    with open('products.txt', 'rb') as f:
+        global products
+        try:
+            products = pickle.load(f)
+        except:
+            return
+        print('products loaded')
+def save():
+    with open('products.txt', 'wb') as f:
+        pickle.dump(products, f)
+
 class Product():
     def __init__(self, title, color, portrait, sku, price, drop_date, method):
         self.title = title + ' ' + color
@@ -50,4 +63,11 @@ def request_products():
             embed.add_field(name="drop method:", value=str(x.method), inline=1)
             print('1')
             send_webook(embed)
-request_products()
+if __name__ == '__main__':
+    while True:
+        try:
+            request_products()
+            time.sleep(1800)
+        except KeyboardInterrupt:
+            exit()
+   
